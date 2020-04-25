@@ -10,6 +10,10 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
+repositories {
+	jcenter()
+}
+
 dependencies {
 	//to change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -21,6 +25,14 @@ dependencies {
 
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.
+
+	modApi "me.shedaniel.cloth:config-2:2.13.2"
+	include "me.shedaniel.cloth:config-2:2.13.2"
+
+	modCompile "me.sargunvohra.mcmods:autoconfig1u:2.0.1"
+	include "me.sargunvohra.mcmods:autoconfig1u:2.0.1"
+
+	modImplementation "io.github.prospector:modmenu:1.10.2+build.32"
 }
 
 processResources {
