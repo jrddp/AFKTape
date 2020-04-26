@@ -1,8 +1,8 @@
 package net.fabricmc.example;
 
-import net.fabricmc.fabric.api.client.keybinding.FabricKeyBinding;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
+import net.minecraft.text.LiteralText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,30 +14,39 @@ public class Tracker {
     static final int keyK = 75;
 
     public KeyBinding keyToggle = new KeyBinding("key.afkhelperToggle", keyK, "key.catagories.gameplay");
+    private boolean paused = false;
+    public boolean wasPaused = false;
     private boolean running = false;
-    public List<KeyBinding> enabledKeys = new ArrayList<KeyBinding>();
-
-    public boolean onKeyPressed(int key, int scancode, int action, int modifiers) {
-        for (KeyBinding keyBinding : MinecraftClient.getInstance().options.keysAll) {
-            if (keyBinding.isPressed()) {
-                enabledKeys.add(keyBinding);
-            }
-        }
-        return false;
-    }
+    public List<KeyBinding> enabledKeys = new ArrayList<>();
 
     public boolean isRunning() {
-        return running;
+        return running && !paused;
     }
 
     public void enable(List<KeyBinding> keys) {
         running = true;
         enabledKeys.addAll(keys);
+        MinecraftClient.getInstance().mouse.unlockCursor();
+        if (MinecraftClient.getInstance().player != null)
+        MinecraftClient.getInstance().player.addChatMessage(new LiteralText("AfkHelper enabled."), true);
     }
 
     public void disable() {
+        enabledKeys.forEach(key -> key.setPressed(false));
         enabledKeys.clear();
         running = false;
+        if (MinecraftClient.getInstance().currentScreen == null) MinecraftClient.getInstance().mouse.lockCursor();
+        if (MinecraftClient.getInstance().player != null)
+        MinecraftClient.getInstance().player.addChatMessage(new LiteralText("AfkHelper disabled."), true);
+    }
+
+    public void pause() {
+        paused = true;
+        wasPaused = true;
+    }
+
+    public void unpause() {
+        paused = false;
     }
 
 }

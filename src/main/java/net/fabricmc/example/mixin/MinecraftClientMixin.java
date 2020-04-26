@@ -3,11 +3,9 @@ package net.fabricmc.example.mixin;
 import jdk.internal.jline.internal.Nullable;
 import net.fabricmc.example.Tracker;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.options.GameOptions;
 import net.minecraft.client.options.KeyBinding;
-import net.minecraft.text.LiteralText;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -20,28 +18,33 @@ import java.util.ArrayList;
 @Mixin(MinecraftClient.class)
 public abstract class MinecraftClientMixin {
 
-    @Shadow @Nullable
+    @Shadow
+    @Nullable
     public Screen currentScreen;
 
-    @Shadow @Final public GameOptions options;
+    @Shadow
+    @Final
+    public GameOptions options;
+
+    @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;openPauseMenu(Z)V", cancellable = true)
+    private void testModifyOpenPauseMenu(CallbackInfo info) {
+
+        if (Tracker.INSTANCE.isRunning()) info.cancel();
+
+    }
 
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;openScreen(Lnet/minecraft/client/gui/screen/Screen;)V", cancellable = true)
     private void testModifyOpenScreen(Screen screen, CallbackInfo info) {
 
         if (screen == null && currentScreen != null) {
-
+            Tracker.INSTANCE.unpause();
+        } else if (currentScreen == null && screen != null) {
+            Tracker.INSTANCE.pause();
         }
 
     }
 
-    @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;openPauseMenu(Z)V", cancellable = true)
-    private void testModifyOpenPauseMenu(boolean bl, CallbackInfo info) {
-
-        info.cancel();
-
-    }
-
-    @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;handleInputEvents()V", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;handleInputEvents()V")
     private void testModifyHanldeInputEvents(CallbackInfo info) {
 
         if (Tracker.INSTANCE.keyToggle.wasPressed()) {
@@ -54,8 +57,15 @@ public abstract class MinecraftClientMixin {
             Tracker.INSTANCE.enable(pressedKeybinds);
         }
 
-    }
+        if (Tracker.INSTANCE.isRunning()) {
+            if (Tracker.INSTANCE.wasPaused) {
+                Tracker.INSTANCE.enabledKeys.forEach(key -> KeyBinding.onKeyPressed(((KeyBindingMixin) key).getKeyCode()));
+                Tracker.INSTANCE.wasPaused = false;
+            }
+            Tracker.INSTANCE.enabledKeys.forEach(key -> key.setPressed(true));
+        }
 
+    }
 
 
 }

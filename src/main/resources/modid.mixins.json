@@ -6,6 +6,8 @@
   "mixins": [
   ],
   "client": [
+    "KeyBindingMixin",
+    "KeyboardMixin",
     "MinecraftClientMixin",
     "MouseMixin"
   ],
