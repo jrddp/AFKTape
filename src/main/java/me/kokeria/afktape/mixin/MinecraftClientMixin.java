@@ -1,7 +1,7 @@
-package net.fabricmc.example.mixin;
+package me.kokeria.afktape.mixin;
 
 import jdk.internal.jline.internal.Nullable;
-import net.fabricmc.example.Tracker;
+import me.kokeria.afktape.Tracker;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.options.GameOptions;

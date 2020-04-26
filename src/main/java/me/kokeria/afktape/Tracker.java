@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package me.kokeria.afktape;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
@@ -30,7 +30,7 @@ public class Tracker {
         enabledKeys.addAll(keys);
         MinecraftClient.getInstance().mouse.unlockCursor();
         if (MinecraftClient.getInstance().player != null) {
-            StringBuilder str = new StringBuilder("AfkHelper enabled with ");
+            StringBuilder str = new StringBuilder("Taped down ");
             enabledKeys.forEach(key -> str.append(key.getLocalizedName()).append(", "));
             MinecraftClient.getInstance().player.addChatMessage(new LiteralText(str.toString()), true);
         }
@@ -42,7 +42,7 @@ public class Tracker {
         running = false;
         if (MinecraftClient.getInstance().currentScreen == null) MinecraftClient.getInstance().mouse.lockCursor();
         if (MinecraftClient.getInstance().player != null)
-            MinecraftClient.getInstance().player.addChatMessage(new LiteralText("AfkHelper disabled."), true);
+            MinecraftClient.getInstance().player.addChatMessage(new LiteralText("Untaped keys"), true);
     }
 
     public void pause() {

@@ -1,4 +1,4 @@
-package net.fabricmc.example.mixin;
+package me.kokeria.afktape.mixin;
 
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.client.util.InputUtil;

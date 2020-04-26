@@ -1,32 +1,31 @@
 {
   "schemaVersion": 1,
-  "id": "configtest",
+  "id": "afktape",
   "version": "${version}",
 
-  "name": "Config Test",
-  "description": "I'm just testing some things no need to worry.",
+  "name": "AFKTape",
+  "description": "Simulate taping buttons down to get things done while AFK\nHold down whatever buttons you want to tape and press the 'Tape Keys' keybind",
   "authors": [
-    "You!"
+    "Kokeria"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": ""
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/afktape/icon.png",
 
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "net.fabricmc.example.ExampleMod"
+    "client": [
+      "me.kokeria.afktape.AFKTape"
     ],
     "modmenu": [
-      "net.fabricmc.example.ModConfig"
+      "me.kokeria.afktape.ModConfig"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "afktape.mixins.json"
   ],
 
   "depends": {

@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package me.kokeria.afktape;
 
 import io.github.prospector.modmenu.api.ConfigScreenFactory;
 import io.github.prospector.modmenu.api.ModMenuApi;
@@ -7,7 +7,7 @@ import me.sargunvohra.mcmods.autoconfig1u.ConfigData;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.Config;
 import me.sargunvohra.mcmods.autoconfig1u.annotation.ConfigEntry;
 
-@Config(name = "configtest")
+@Config(name = "afktape")
 public class ModConfig implements ConfigData, ModMenuApi {
 
     @ConfigEntry.Gui.PrefixText
@@ -21,6 +21,6 @@ public class ModConfig implements ConfigData, ModMenuApi {
 
     @Override
     public String getModId() {
-        return "configtest";
+        return "afktape";
     }
 }

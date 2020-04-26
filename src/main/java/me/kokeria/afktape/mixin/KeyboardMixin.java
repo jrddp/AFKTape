@@ -1,6 +1,6 @@
-package net.fabricmc.example.mixin;
+package me.kokeria.afktape.mixin;
 
-import net.fabricmc.example.Tracker;
+import me.kokeria.afktape.Tracker;
 import net.minecraft.client.Keyboard;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
