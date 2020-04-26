@@ -11,7 +11,6 @@ public class ExampleMod implements ModInitializer {
         // However, some things (like resources) may still be uninitialized.
         // Proceed with mild caution.
 
-
         AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
         ModConfig config = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
         System.out.println("ToggleA = " + config.toggleA);

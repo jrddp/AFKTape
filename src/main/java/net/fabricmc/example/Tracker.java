@@ -13,6 +13,7 @@ public class Tracker {
 
     static final int keyK = 75;
 
+    // todo add KeyBinding to keyBinding menu
     public KeyBinding keyToggle = new KeyBinding("key.afkhelperToggle", keyK, "key.catagories.gameplay");
     private boolean paused = false;
     public boolean wasPaused = false;
@@ -23,12 +24,16 @@ public class Tracker {
         return running && !paused;
     }
 
+    // todo add a clear HUD that shows what keys are enabled and tells the user how to escape
     public void enable(List<KeyBinding> keys) {
         running = true;
         enabledKeys.addAll(keys);
         MinecraftClient.getInstance().mouse.unlockCursor();
-        if (MinecraftClient.getInstance().player != null)
-        MinecraftClient.getInstance().player.addChatMessage(new LiteralText("AfkHelper enabled."), true);
+        if (MinecraftClient.getInstance().player != null) {
+            StringBuilder str = new StringBuilder("AfkHelper enabled with ");
+            enabledKeys.forEach(key -> str.append(key.getLocalizedName()).append(", "));
+            MinecraftClient.getInstance().player.addChatMessage(new LiteralText(str.toString()), true);
+        }
     }
 
     public void disable() {
@@ -37,7 +42,7 @@ public class Tracker {
         running = false;
         if (MinecraftClient.getInstance().currentScreen == null) MinecraftClient.getInstance().mouse.lockCursor();
         if (MinecraftClient.getInstance().player != null)
-        MinecraftClient.getInstance().player.addChatMessage(new LiteralText("AfkHelper disabled."), true);
+            MinecraftClient.getInstance().player.addChatMessage(new LiteralText("AfkHelper disabled."), true);
     }
 
     public void pause() {

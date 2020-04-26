@@ -54,7 +54,8 @@ public abstract class MinecraftClientMixin {
                     pressedKeybinds.add(keyBinding);
                 }
             }
-            Tracker.INSTANCE.enable(pressedKeybinds);
+            if (!pressedKeybinds.isEmpty())
+                Tracker.INSTANCE.enable(pressedKeybinds);
         }
 
         if (Tracker.INSTANCE.isRunning()) {
