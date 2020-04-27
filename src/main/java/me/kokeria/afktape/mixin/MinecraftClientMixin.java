@@ -1,7 +1,7 @@
 package me.kokeria.afktape.mixin;
 
 import jdk.internal.jline.internal.Nullable;
-import me.kokeria.afktape.AFKTape;
+import me.kokeria.afktape.Manager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -19,6 +19,8 @@ import java.util.ArrayList;
 @Mixin(MinecraftClient.class)
 public abstract class MinecraftClientMixin {
 
+    //todo rename all mixin methods
+
     @Shadow
     @Nullable
     public Screen currentScreen;
@@ -33,7 +35,7 @@ public abstract class MinecraftClientMixin {
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;tick()V")
     private void tapeModifyTick(CallbackInfo info) {
 
-        if (AFKTape.INSTANCE.isRunningIgnorePause() && (player == null || !player.isAlive())) AFKTape.INSTANCE.disable();
+        if (Manager.INSTANCE.isRunningIgnorePause() && (player == null || !player.isAlive())) Manager.INSTANCE.disable();
 
     }
 
@@ -41,7 +43,7 @@ public abstract class MinecraftClientMixin {
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;openPauseMenu(Z)V", cancellable = true)
     private void testModifyOpenPauseMenu(CallbackInfo info) {
 
-        if (AFKTape.INSTANCE.isRunning()) info.cancel();
+        if (Manager.INSTANCE.isRunning()) info.cancel();
 
     }
 
@@ -50,9 +52,9 @@ public abstract class MinecraftClientMixin {
     private void testModifyOpenScreen(Screen screen, CallbackInfo info) {
 
         if (screen == null && currentScreen != null) {
-            AFKTape.INSTANCE.unpause();
+            Manager.INSTANCE.unpause();
         } else if (currentScreen == null && screen != null) {
-            AFKTape.INSTANCE.pause();
+            Manager.INSTANCE.pause();
         }
 
     }
@@ -61,7 +63,7 @@ public abstract class MinecraftClientMixin {
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;handleInputEvents()V")
     private void testModifyHandleInputEvents(CallbackInfo info) {
 
-        if (AFKTape.INSTANCE.keyToggle.wasPressed()) {
+        if (Manager.INSTANCE.keyToggle.wasPressed()) {
             ArrayList<KeyBinding> pressedKeybinds = new ArrayList<>();
             for (KeyBinding keyBinding : options.keysAll) {
                 if (keyBinding.isPressed()) {
@@ -69,16 +71,16 @@ public abstract class MinecraftClientMixin {
                 }
             }
             if (!pressedKeybinds.isEmpty())
-                AFKTape.INSTANCE.enable(pressedKeybinds);
+                Manager.INSTANCE.enable(pressedKeybinds);
         }
 
-        if (AFKTape.INSTANCE.isRunning()) {
-            if (AFKTape.INSTANCE.wasPaused) {
-                AFKTape.INSTANCE.enabledKeys.forEach(key -> KeyBinding.onKeyPressed(((KeyBindingAccessor) key).getKeyCode()));
-                AFKTape.INSTANCE.wasPaused = false;
+        if (Manager.INSTANCE.isRunning()) {
+            if (Manager.INSTANCE.wasPaused) {
+                Manager.INSTANCE.enabledKeys.forEach(key -> KeyBinding.onKeyPressed(((KeyBindingAccessor) key).getKeyCode()));
+                Manager.INSTANCE.wasPaused = false;
             }
             else {
-                AFKTape.INSTANCE.enabledKeys.forEach(key -> key.setPressed(true));
+                Manager.INSTANCE.enabledKeys.forEach(key -> key.setPressed(true));
             }
         }
 

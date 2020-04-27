@@ -1,6 +1,6 @@
 package me.kokeria.afktape.mixin;
 
-import me.kokeria.afktape.AFKTape;
+import me.kokeria.afktape.Manager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.Mouse;
 import org.spongepowered.asm.mixin.Mixin;
@@ -28,7 +28,7 @@ public abstract class MouseMixin {
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/Mouse;lockCursor()V", cancellable = true)
     private void testModifyLockCursor(CallbackInfo info) {
 
-        if (AFKTape.INSTANCE.isRunning()) info.cancel();
+        if (Manager.INSTANCE.isRunning()) info.cancel();
 
     }
 
@@ -36,7 +36,7 @@ public abstract class MouseMixin {
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/Mouse;onCursorPos(JDD)V", cancellable = true)
     private void testModifyOnCursorPos(CallbackInfo info) {
 
-        if (AFKTape.INSTANCE.isRunning()) info.cancel();
+        if (Manager.INSTANCE.isRunning()) info.cancel();
 
     }
 

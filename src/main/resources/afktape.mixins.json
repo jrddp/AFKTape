@@ -6,11 +6,11 @@
   "mixins": [
   ],
   "client": [
+    "InGameHudMixin",
     "KeyBindingAccessor",
     "KeyboardMixin",
     "MinecraftClientMixin",
-    "MouseMixin",
-    "InGameHudMixin"
+    "MouseMixin"
   ],
   "injectors": {
     "defaultRequire": 1
