@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(KeyBinding.class)
-public interface KeyBindingMixin {
+public interface KeyBindingAccessor {
 
     @Accessor(value = "keyCode")
     InputUtil.KeyCode getKeyCode();
