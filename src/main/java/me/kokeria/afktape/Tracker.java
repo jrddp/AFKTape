@@ -3,6 +3,7 @@ package me.kokeria.afktape;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.text.LiteralText;
+import net.minecraft.util.Formatting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,16 +25,31 @@ public class Tracker {
         return running && !paused;
     }
 
-    // todo add a clear HUD that shows what keys are enabled and tells the user how to escape
     public void enable(List<KeyBinding> keys) {
         running = true;
         enabledKeys.addAll(keys);
         MinecraftClient.getInstance().mouse.unlockCursor();
+    }
+
+    public String[] getMessage() {
+
+        String[] msg = new String[2];
+
         if (MinecraftClient.getInstance().player != null) {
             StringBuilder str = new StringBuilder("Taped down ");
-            enabledKeys.forEach(key -> str.append(key.getLocalizedName()).append(", "));
-            MinecraftClient.getInstance().player.addChatMessage(new LiteralText(str.toString()), true);
+            for (int i = 0; i < enabledKeys.size(); i++) {
+                if (i == enabledKeys.size() - 1) str.append("and ");
+                str.append(Formatting.AQUA).append(enabledKeys.get(i).getLocalizedName().toUpperCase());
+                if (i < enabledKeys.size() - 1) str.append(Formatting.WHITE).append(", ");
+            }
+
+            msg[0] = str.toString();
+            msg[1] = (Formatting.WHITE + "Press " + Formatting.RED + "ESCAPE" + Formatting.WHITE + " to exit");
+            return msg;
         }
+
+        return new String[0];
+
     }
 
     public void disable() {
@@ -41,8 +57,6 @@ public class Tracker {
         enabledKeys.clear();
         running = false;
         if (MinecraftClient.getInstance().currentScreen == null) MinecraftClient.getInstance().mouse.lockCursor();
-        if (MinecraftClient.getInstance().player != null)
-            MinecraftClient.getInstance().player.addChatMessage(new LiteralText("Untaped keys"), true);
     }
 
     public void pause() {

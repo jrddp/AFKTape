@@ -45,7 +45,7 @@ public abstract class MinecraftClientMixin {
     }
 
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;handleInputEvents()V")
-    private void testModifyHanldeInputEvents(CallbackInfo info) {
+    private void testModifyHandleInputEvents(CallbackInfo info) {
 
         if (Tracker.INSTANCE.keyToggle.wasPressed()) {
             ArrayList<KeyBinding> pressedKeybinds = new ArrayList<>();
