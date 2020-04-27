@@ -17,12 +17,6 @@
 
   "environment": "*",
   "entrypoints": {
-    "client": [
-      "me.kokeria.afktape.AFKTape"
-    ],
-    "modmenu": [
-      "me.kokeria.afktape.ModConfig"
-    ]
   },
   "mixins": [
     "afktape.mixins.json"
