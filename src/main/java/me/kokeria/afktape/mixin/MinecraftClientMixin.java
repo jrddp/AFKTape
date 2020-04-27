@@ -49,7 +49,7 @@ public abstract class MinecraftClientMixin {
     }
 
     // pause/unpause tape on open/close
-    @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;openScreen(Lnet/minecraft/client/gui/screen/Screen;)V", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;openScreen(Lnet/minecraft/client/gui/screen/Screen;)V")
     private void tapeModifyOpenScreen(Screen screen, CallbackInfo info) {
 
         if (screen == null && currentScreen != null) {
