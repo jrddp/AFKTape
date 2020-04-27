@@ -63,7 +63,9 @@ public abstract class MinecraftClientMixin {
                 AFKTape.INSTANCE.enabledKeys.forEach(key -> KeyBinding.onKeyPressed(((KeyBindingMixin) key).getKeyCode()));
                 AFKTape.INSTANCE.wasPaused = false;
             }
-            AFKTape.INSTANCE.enabledKeys.forEach(key -> key.setPressed(true));
+            else {
+                AFKTape.INSTANCE.enabledKeys.forEach(key -> key.setPressed(true));
+            }
         }
 
     }

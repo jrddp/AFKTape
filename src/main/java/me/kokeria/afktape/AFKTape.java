@@ -9,12 +9,14 @@ import java.util.List;
 
 public class AFKTape {
 
+    //todo add logo
+
     public static final AFKTape INSTANCE = new AFKTape();
 
     static final int keyK = 75;
 
     // todo add KeyBinding to keyBinding menu
-    public KeyBinding keyToggle = new KeyBinding("key.afkhelperToggle", keyK, "key.catagories.gameplay");
+    public KeyBinding keyToggle = new KeyBinding("key.tapekeys", keyK, "key.catagories.gameplay");
     private boolean paused = false;
     public boolean wasPaused = false;
     private boolean running = false;
