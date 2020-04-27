@@ -1,7 +1,7 @@
 package me.kokeria.afktape.mixin;
 
 import jdk.internal.jline.internal.Nullable;
-import me.kokeria.afktape.Tracker;
+import me.kokeria.afktape.AFKTape;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.options.GameOptions;
@@ -29,7 +29,7 @@ public abstract class MinecraftClientMixin {
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;openPauseMenu(Z)V", cancellable = true)
     private void testModifyOpenPauseMenu(CallbackInfo info) {
 
-        if (Tracker.INSTANCE.isRunning()) info.cancel();
+        if (AFKTape.INSTANCE.isRunning()) info.cancel();
 
     }
 
@@ -37,9 +37,9 @@ public abstract class MinecraftClientMixin {
     private void testModifyOpenScreen(Screen screen, CallbackInfo info) {
 
         if (screen == null && currentScreen != null) {
-            Tracker.INSTANCE.unpause();
+            AFKTape.INSTANCE.unpause();
         } else if (currentScreen == null && screen != null) {
-            Tracker.INSTANCE.pause();
+            AFKTape.INSTANCE.pause();
         }
 
     }
@@ -47,7 +47,7 @@ public abstract class MinecraftClientMixin {
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;handleInputEvents()V")
     private void testModifyHandleInputEvents(CallbackInfo info) {
 
-        if (Tracker.INSTANCE.keyToggle.wasPressed()) {
+        if (AFKTape.INSTANCE.keyToggle.wasPressed()) {
             ArrayList<KeyBinding> pressedKeybinds = new ArrayList<>();
             for (KeyBinding keyBinding : options.keysAll) {
                 if (keyBinding.isPressed()) {
@@ -55,15 +55,15 @@ public abstract class MinecraftClientMixin {
                 }
             }
             if (!pressedKeybinds.isEmpty())
-                Tracker.INSTANCE.enable(pressedKeybinds);
+                AFKTape.INSTANCE.enable(pressedKeybinds);
         }
 
-        if (Tracker.INSTANCE.isRunning()) {
-            if (Tracker.INSTANCE.wasPaused) {
-                Tracker.INSTANCE.enabledKeys.forEach(key -> KeyBinding.onKeyPressed(((KeyBindingMixin) key).getKeyCode()));
-                Tracker.INSTANCE.wasPaused = false;
+        if (AFKTape.INSTANCE.isRunning()) {
+            if (AFKTape.INSTANCE.wasPaused) {
+                AFKTape.INSTANCE.enabledKeys.forEach(key -> KeyBinding.onKeyPressed(((KeyBindingMixin) key).getKeyCode()));
+                AFKTape.INSTANCE.wasPaused = false;
             }
-            Tracker.INSTANCE.enabledKeys.forEach(key -> key.setPressed(true));
+            AFKTape.INSTANCE.enabledKeys.forEach(key -> key.setPressed(true));
         }
 
     }

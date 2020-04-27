@@ -1,6 +1,6 @@
 package me.kokeria.afktape.mixin;
 
-import me.kokeria.afktape.Tracker;
+import me.kokeria.afktape.AFKTape;
 import net.minecraft.client.Keyboard;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
@@ -20,16 +20,16 @@ public abstract class KeyboardMixin {
         boolean keyState = i == 1;
 
         // stops players from double pressing any keys that are already automated
-        if (Tracker.INSTANCE.isRunning()) {
-            for (KeyBinding keyBinding : Tracker.INSTANCE.enabledKeys) {
+        if (AFKTape.INSTANCE.isRunning()) {
+            for (KeyBinding keyBinding : AFKTape.INSTANCE.enabledKeys) {
                 if (keyBinding.matchesKey(key, scancode)) info.cancel();
             }
         }
 
         // disable when escape is pressed outside of a gui
-        if (key == KEY_ESCAPE && keyState && Tracker.INSTANCE.isRunning() && MinecraftClient.getInstance().currentScreen == null) {
+        if (key == KEY_ESCAPE && keyState && AFKTape.INSTANCE.isRunning() && MinecraftClient.getInstance().currentScreen == null) {
 
-            Tracker.INSTANCE.disable();
+            AFKTape.INSTANCE.disable();
             info.cancel();
 
         }

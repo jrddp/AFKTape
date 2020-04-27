@@ -1,10 +1,9 @@
 package me.kokeria.afktape.mixin;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import me.kokeria.afktape.Tracker;
+import me.kokeria.afktape.AFKTape;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,9 +25,9 @@ public abstract class InGameHudMixin {
     @Inject(at = @At("TAIL"), method = "Lnet/minecraft/client/gui/hud/InGameHud;render(F)V")
     private void testModifyOnKey(CallbackInfo info) {
 
-        if (Tracker.INSTANCE.isRunning()) {
+        if (AFKTape.INSTANCE.isRunning()) {
             TextRenderer textRenderer = getFontRenderer();
-            String[] AFKTapeMsg = Tracker.INSTANCE.getMessage();
+            String[] AFKTapeMsg = AFKTape.INSTANCE.getMessage();
 
             RenderSystem.pushMatrix();
             RenderSystem.translatef((float) (scaledWidth / 2), (float) (scaledHeight / 2 - 15), 0.0F);

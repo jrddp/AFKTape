@@ -2,15 +2,14 @@ package me.kokeria.afktape;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
-import net.minecraft.text.LiteralText;
 import net.minecraft.util.Formatting;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tracker {
+public class AFKTape {
 
-    public static final Tracker INSTANCE = new Tracker();
+    public static final AFKTape INSTANCE = new AFKTape();
 
     static final int keyK = 75;
 
