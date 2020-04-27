@@ -22,6 +22,7 @@ public abstract class InGameHudMixin {
 
     @Shadow public abstract TextRenderer getFontRenderer();
 
+    //render HUD when running
     @Inject(at = @At("TAIL"), method = "Lnet/minecraft/client/gui/hud/InGameHud;render(F)V")
     private void testModifyOnKey(CallbackInfo info) {
 

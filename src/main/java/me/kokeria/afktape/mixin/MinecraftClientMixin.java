@@ -26,6 +26,7 @@ public abstract class MinecraftClientMixin {
     @Final
     public GameOptions options;
 
+    // cancel automatic game pause while running
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;openPauseMenu(Z)V", cancellable = true)
     private void testModifyOpenPauseMenu(CallbackInfo info) {
 
@@ -33,6 +34,7 @@ public abstract class MinecraftClientMixin {
 
     }
 
+    // pause/unpause tape on open/close
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;openScreen(Lnet/minecraft/client/gui/screen/Screen;)V", cancellable = true)
     private void testModifyOpenScreen(Screen screen, CallbackInfo info) {
 
@@ -44,6 +46,7 @@ public abstract class MinecraftClientMixin {
 
     }
 
+    // press keys if enabled
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;handleInputEvents()V")
     private void testModifyHandleInputEvents(CallbackInfo info) {
 

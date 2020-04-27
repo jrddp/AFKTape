@@ -10,6 +10,7 @@ import java.util.List;
 public class AFKTape {
 
     //todo add logo
+    //FIXME cancel on death or kick
 
     public static final AFKTape INSTANCE = new AFKTape();
 

@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MouseMixin {
 
 
+    // tell minecraft that cursor is locked even though it's not
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/Mouse;isCursorLocked()Z", cancellable = true)
     private void testModifyIsCursorLocked(CallbackInfoReturnable<Boolean> info) {
 
@@ -23,6 +24,7 @@ public abstract class MouseMixin {
 
     }
 
+    // cancels locking of cursor
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/Mouse;lockCursor()V", cancellable = true)
     private void testModifyLockCursor(CallbackInfo info) {
 
@@ -30,6 +32,7 @@ public abstract class MouseMixin {
 
     }
 
+    // cancels mouse moving player look
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/Mouse;onCursorPos(JDD)V", cancellable = true)
     private void testModifyOnCursorPos(CallbackInfo info) {
 
