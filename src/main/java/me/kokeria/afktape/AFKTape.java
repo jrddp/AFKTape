@@ -9,8 +9,7 @@ import java.util.List;
 
 public class AFKTape {
 
-    //todo add logo and website
-    //FIXME cancel on death or kick
+    //todo add website
 
     public static final AFKTape INSTANCE = new AFKTape();
 
