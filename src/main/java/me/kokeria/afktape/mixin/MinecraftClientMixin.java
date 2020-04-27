@@ -4,6 +4,7 @@ import jdk.internal.jline.internal.Nullable;
 import me.kokeria.afktape.AFKTape;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.options.GameOptions;
 import net.minecraft.client.options.KeyBinding;
 import org.spongepowered.asm.mixin.Final;
@@ -25,6 +26,16 @@ public abstract class MinecraftClientMixin {
     @Shadow
     @Final
     public GameOptions options;
+
+    @Shadow @Nullable public ClientPlayerEntity player;
+
+    // disable if running when player is dead or doesn't exist (in game menu, etc)
+    @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;tick()V")
+    private void tapeModifyTick(CallbackInfo info) {
+
+        if (AFKTape.INSTANCE.isRunningIgnorePause() && (player == null || !player.isAlive())) AFKTape.INSTANCE.disable();
+
+    }
 
     // cancel automatic game pause while running
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;openPauseMenu(Z)V", cancellable = true)
@@ -63,7 +74,7 @@ public abstract class MinecraftClientMixin {
 
         if (AFKTape.INSTANCE.isRunning()) {
             if (AFKTape.INSTANCE.wasPaused) {
-                AFKTape.INSTANCE.enabledKeys.forEach(key -> KeyBinding.onKeyPressed(((KeyBindingMixin) key).getKeyCode()));
+                AFKTape.INSTANCE.enabledKeys.forEach(key -> KeyBinding.onKeyPressed(((KeyBindingAccessor) key).getKeyCode()));
                 AFKTape.INSTANCE.wasPaused = false;
             }
             else {

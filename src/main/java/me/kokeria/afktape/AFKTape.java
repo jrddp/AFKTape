@@ -9,7 +9,7 @@ import java.util.List;
 
 public class AFKTape {
 
-    //todo add logo
+    //todo add logo and website
     //FIXME cancel on death or kick
 
     public static final AFKTape INSTANCE = new AFKTape();
@@ -25,6 +25,10 @@ public class AFKTape {
 
     public boolean isRunning() {
         return running && !paused;
+    }
+
+    public boolean isRunningIgnorePause() {
+        return running;
     }
 
     public void enable(List<KeyBinding> keys) {
@@ -58,6 +62,8 @@ public class AFKTape {
         enabledKeys.forEach(key -> key.setPressed(false));
         enabledKeys.clear();
         running = false;
+        unpause();
+        wasPaused = false;
         if (MinecraftClient.getInstance().currentScreen == null) MinecraftClient.getInstance().mouse.lockCursor();
     }
 
