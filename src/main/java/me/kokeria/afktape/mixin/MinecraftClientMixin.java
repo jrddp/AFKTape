@@ -15,7 +15,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,13 +29,16 @@ public abstract class MinecraftClientMixin {
     @Final
     public GameOptions options;
 
-    @Shadow @Nullable public ClientPlayerEntity player;
+    @Shadow
+    @Nullable
+    public ClientPlayerEntity player;
 
     // disable if running when player is dead or doesn't exist (in game menu, etc)
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;tick()V")
     private void tapeModifyTick(CallbackInfo info) {
 
-        if (Manager.INSTANCE.isRunningIgnorePause() && (player == null || !player.isAlive())) Manager.INSTANCE.disable();
+        if (Manager.INSTANCE.isRunningIgnorePause() && (player == null || !player.isAlive()))
+            Manager.INSTANCE.disable();
 
     }
 
@@ -49,7 +51,7 @@ public abstract class MinecraftClientMixin {
     }
 
     // pause/unpause tape on open/close
-    @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;openScreen(Lnet/minecraft/client/gui/screen/Screen;)V", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;openScreen(Lnet/minecraft/client/gui/screen/Screen;)V")
     private void tapeModifyOpenScreen(Screen screen, CallbackInfo info) {
 
         if (screen == null && currentScreen != null) {
@@ -69,7 +71,7 @@ public abstract class MinecraftClientMixin {
             for (KeyBinding keyBinding : options.keysAll) {
                 if (keyBinding.isPressed()) {
                     if (keyBinding != AFKTape.keyTape)
-                    pressedKeybinds.add(keyBinding);
+                        pressedKeybinds.add(keyBinding);
                 }
             }
             if (!pressedKeybinds.isEmpty())
@@ -80,8 +82,7 @@ public abstract class MinecraftClientMixin {
             if (Manager.INSTANCE.wasPaused) {
                 Manager.INSTANCE.enabledKeys.forEach(key -> KeyBinding.onKeyPressed(((KeyBindingAccessor) key).getKeyCode()));
                 Manager.INSTANCE.wasPaused = false;
-            }
-            else {
+            } else {
                 Manager.INSTANCE.enabledKeys.forEach(key -> key.setPressed(true));
             }
         }
