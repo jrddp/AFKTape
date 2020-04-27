@@ -4,21 +4,17 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.options.KeyBinding;
 import net.minecraft.util.Formatting;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Manager {
 
     public static final Manager INSTANCE = new Manager();
 
-    static final int keyK = 75;
 
-    // todo add KeyBinding to keyBinding menu
-    public KeyBinding keyToggle = new KeyBinding("key.tapekeys", keyK, "key.catagories.gameplay");
     private boolean paused = false;
     public boolean wasPaused = false;
     private boolean running = false;
-    public List<KeyBinding> enabledKeys = new ArrayList<>();
+    public Set<KeyBinding> enabledKeys = new HashSet<>();
 
     public boolean isRunning() {
         return running && !paused;
@@ -28,7 +24,7 @@ public class Manager {
         return running;
     }
 
-    public void enable(List<KeyBinding> keys) {
+    public void enable(Set<KeyBinding> keys) {
         running = true;
         enabledKeys.addAll(keys);
         MinecraftClient.getInstance().mouse.unlockCursor();
@@ -40,10 +36,13 @@ public class Manager {
 
         if (MinecraftClient.getInstance().player != null) {
             StringBuilder str = new StringBuilder("Taped down ");
-            for (int i = 0; i < enabledKeys.size(); i++) {
-                if (i == enabledKeys.size() - 1 && i != 0) str.append("and ");
-                str.append(Formatting.AQUA).append(enabledKeys.get(i).getLocalizedName().toUpperCase());
-                if (i < enabledKeys.size() - 1) str.append(Formatting.WHITE).append(", ");
+            Iterator<KeyBinding> keyIterator = enabledKeys.iterator();
+            while (keyIterator.hasNext()) {
+                KeyBinding keyBinding = keyIterator.next();
+                boolean isLast = !keyIterator.hasNext();
+                if (isLast && enabledKeys.size() > 1) str.append("and ");
+                str.append(Formatting.AQUA).append(keyBinding.getLocalizedName().toUpperCase());
+                if (!isLast) str.append(Formatting.WHITE).append(", ");
             }
 
             msg[0] = str.toString();

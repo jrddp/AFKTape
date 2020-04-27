@@ -1,6 +1,7 @@
 package me.kokeria.afktape.mixin;
 
 import jdk.internal.jline.internal.Nullable;
+import me.kokeria.afktape.AFKTape;
 import me.kokeria.afktape.Manager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -15,11 +16,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 @Mixin(MinecraftClient.class)
 public abstract class MinecraftClientMixin {
-
-    //todo rename all mixin methods
 
     @Shadow
     @Nullable
@@ -63,10 +64,11 @@ public abstract class MinecraftClientMixin {
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;handleInputEvents()V")
     private void tapeModifyHandleInputEvents(CallbackInfo info) {
 
-        if (Manager.INSTANCE.keyToggle.wasPressed()) {
-            ArrayList<KeyBinding> pressedKeybinds = new ArrayList<>();
+        if (AFKTape.keyTape.wasPressed()) {
+            Set<KeyBinding> pressedKeybinds = new HashSet<>();
             for (KeyBinding keyBinding : options.keysAll) {
                 if (keyBinding.isPressed()) {
+                    if (keyBinding != AFKTape.keyTape)
                     pressedKeybinds.add(keyBinding);
                 }
             }

@@ -17,6 +17,9 @@
 
   "environment": "*",
   "entrypoints": {
+    "client": [
+      "me.kokeria.afktape.AFKTape"
+    ]
   },
   "mixins": [
     "afktape.mixins.json"
