@@ -15,7 +15,7 @@ public abstract class MouseMixin {
 
     // tell minecraft that cursor is locked even though it's not
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/Mouse;isCursorLocked()Z", cancellable = true)
-    private void testModifyIsCursorLocked(CallbackInfoReturnable<Boolean> info) {
+    private void tapeModifyIsCursorLocked(CallbackInfoReturnable<Boolean> info) {
 
         if (MinecraftClient.getInstance().currentScreen == null) {
             info.setReturnValue(true);
@@ -26,7 +26,7 @@ public abstract class MouseMixin {
 
     // cancels locking of cursor
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/Mouse;lockCursor()V", cancellable = true)
-    private void testModifyLockCursor(CallbackInfo info) {
+    private void tapeModifyLockCursor(CallbackInfo info) {
 
         if (Manager.INSTANCE.isRunning()) info.cancel();
 
@@ -34,7 +34,7 @@ public abstract class MouseMixin {
 
     // cancels mouse moving player look
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/Mouse;onCursorPos(JDD)V", cancellable = true)
-    private void testModifyOnCursorPos(CallbackInfo info) {
+    private void tapeModifyOnCursorPos(CallbackInfo info) {
 
         if (Manager.INSTANCE.isRunning()) info.cancel();
 

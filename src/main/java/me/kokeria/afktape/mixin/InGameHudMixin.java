@@ -24,7 +24,7 @@ public abstract class InGameHudMixin {
 
     //render HUD when running
     @Inject(at = @At("TAIL"), method = "Lnet/minecraft/client/gui/hud/InGameHud;render(F)V")
-    private void testModifyOnKey(CallbackInfo info) {
+    private void tapeModifyOnKey(CallbackInfo info) {
 
         if (Manager.INSTANCE.isRunning()) {
             TextRenderer textRenderer = getFontRenderer();

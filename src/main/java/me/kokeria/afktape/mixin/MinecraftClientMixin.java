@@ -41,7 +41,7 @@ public abstract class MinecraftClientMixin {
 
     // cancel automatic game pause while running
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;openPauseMenu(Z)V", cancellable = true)
-    private void testModifyOpenPauseMenu(CallbackInfo info) {
+    private void tapeModifyOpenPauseMenu(CallbackInfo info) {
 
         if (Manager.INSTANCE.isRunning()) info.cancel();
 
@@ -49,7 +49,7 @@ public abstract class MinecraftClientMixin {
 
     // pause/unpause tape on open/close
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;openScreen(Lnet/minecraft/client/gui/screen/Screen;)V", cancellable = true)
-    private void testModifyOpenScreen(Screen screen, CallbackInfo info) {
+    private void tapeModifyOpenScreen(Screen screen, CallbackInfo info) {
 
         if (screen == null && currentScreen != null) {
             Manager.INSTANCE.unpause();
@@ -61,7 +61,7 @@ public abstract class MinecraftClientMixin {
 
     // press keys if enabled
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;handleInputEvents()V")
-    private void testModifyHandleInputEvents(CallbackInfo info) {
+    private void tapeModifyHandleInputEvents(CallbackInfo info) {
 
         if (Manager.INSTANCE.keyToggle.wasPressed()) {
             ArrayList<KeyBinding> pressedKeybinds = new ArrayList<>();

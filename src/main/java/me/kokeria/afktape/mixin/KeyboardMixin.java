@@ -15,7 +15,7 @@ public abstract class KeyboardMixin {
     final int KEY_ESCAPE = 256;
 
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/Keyboard;onKey(JIIII)V", cancellable = true)
-    private void testModifyOnKey(long window, int key, int scancode, int i, int j, CallbackInfo info) {
+    private void tapeModifyOnKey(long window, int key, int scancode, int i, int j, CallbackInfo info) {
 
         boolean keyState = i == 1;
 
