@@ -38,7 +38,7 @@ public class Tracker {
         if (MinecraftClient.getInstance().player != null) {
             StringBuilder str = new StringBuilder("Taped down ");
             for (int i = 0; i < enabledKeys.size(); i++) {
-                if (i == enabledKeys.size() - 1) str.append("and ");
+                if (i == enabledKeys.size() - 1 && i != 0) str.append("and ");
                 str.append(Formatting.AQUA).append(enabledKeys.get(i).getLocalizedName().toUpperCase());
                 if (i < enabledKeys.size() - 1) str.append(Formatting.WHITE).append(", ");
             }
