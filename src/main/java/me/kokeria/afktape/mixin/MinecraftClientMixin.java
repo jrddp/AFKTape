@@ -1,6 +1,5 @@
 package me.kokeria.afktape.mixin;
 
-import jdk.internal.jline.internal.Nullable;
 import me.kokeria.afktape.AFKTape;
 import me.kokeria.afktape.Manager;
 import net.minecraft.client.MinecraftClient;
@@ -22,7 +21,6 @@ import java.util.Set;
 public abstract class MinecraftClientMixin {
 
     @Shadow
-    @Nullable
     public Screen currentScreen;
 
     @Shadow
@@ -30,7 +28,6 @@ public abstract class MinecraftClientMixin {
     public GameOptions options;
 
     @Shadow
-    @Nullable
     public ClientPlayerEntity player;
 
     // disable if running when player is dead or doesn't exist (in game menu, etc)

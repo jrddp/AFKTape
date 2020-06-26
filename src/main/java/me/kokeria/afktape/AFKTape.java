@@ -17,7 +17,7 @@ public class AFKTape implements ClientModInitializer {
         keyTape = FabricKeyBinding.Builder.create(new Identifier("afktape", "tapekeys"),
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_K,
-                "key.categories.gameplay").build();
+                "key.categories.misc").build();
         KeyBindingRegistry.INSTANCE.register(keyTape);
 
     }
