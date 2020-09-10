@@ -9,6 +9,7 @@ import org.lwjgl.glfw.GLFW;
 public class AFKTape implements ClientModInitializer {
 
     public static KeyBinding keyTape;
+    public static KeyBinding keyGrabMouse;
 
     @Override
     public void onInitializeClient() {
@@ -16,8 +17,14 @@ public class AFKTape implements ClientModInitializer {
         keyTape = new KeyBinding("key.afktape.tapekeys",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_K,
-                "key.categories.misc");
+                "key.categories.afktape");
         KeyBindingHelper.registerKeyBinding(keyTape);
+
+        keyGrabMouse = new KeyBinding("key.afktape.grabmouse",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_LEFT_ALT,
+                "key.categories.afktape");
+        KeyBindingHelper.registerKeyBinding(keyGrabMouse);
 
     }
 

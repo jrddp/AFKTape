@@ -1,3 +1,5 @@
 {
-  "key.afktape.tapekeys": "Tape Held Keys"
+  "key.categories.afktape": "AFKTape",
+  "key.afktape.tapekeys": "Tape Held Keys",
+  "key.afktape.grabmouse": "Grab Mouse"
 }

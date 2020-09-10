@@ -3,6 +3,8 @@ package me.kokeria.afktape.mixin;
 import me.kokeria.afktape.AFKTape;
 import me.kokeria.afktape.Manager;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.MinecraftClientGame;
+import net.minecraft.client.Mouse;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.options.GameOptions;
@@ -30,12 +32,31 @@ public abstract class MinecraftClientMixin {
     @Shadow
     public ClientPlayerEntity player;
 
+    @Shadow
+    @Final
+    public Mouse mouse;
+
     // disable if running when player is dead or doesn't exist (in game menu, etc)
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/MinecraftClient;tick()V")
     private void tapeModifyTick(CallbackInfo info) {
 
-        if (Manager.INSTANCE.isRunningIgnorePause() && (player == null || !player.isAlive()))
-            Manager.INSTANCE.disable();
+        if (Manager.INSTANCE.isRunningIgnorePause()) {
+
+            // disable on death
+            if (player == null || !player.isAlive()) {
+                Manager.INSTANCE.disable();
+            }
+
+            // handle cursor grabbing with grabMouse keybind
+            if (currentScreen == null) {
+                if (AFKTape.keyGrabMouse.isPressed()) {
+                    mouse.lockCursor();
+                } else {
+                    mouse.unlockCursor();
+                }
+            }
+        }
+
 
     }
 
