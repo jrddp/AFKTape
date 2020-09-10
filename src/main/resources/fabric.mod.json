@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "afktape",
+  "version": "${version}",
+
+  "name": "AFKTape",
+  "description": "Simulate taping buttons down to get things done while AFK\nHold down whatever buttons you want to tape and press the 'Tape Keys' keybind",
+  "authors": [
+    "Kokeria"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/afktape"
+  },
+
+  "license": "MIT",
+  "icon": "assets/afktape/icon.png",
+
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "me.kokeria.afktape.AFKTape"
+    ]
+  },
+  "mixins": [
+    "afktape.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.9.3+build.207",
+    "fabric": "*",
+    "minecraft": "1.16.2"
+  },
+  "custom": {
+    "modmenu:clientsideOnly": true
+  }
+}
