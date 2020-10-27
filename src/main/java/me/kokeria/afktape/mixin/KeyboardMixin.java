@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class KeyboardMixin {
 
     final int KEY_ESCAPE = 256;
+    long lastEscapePressTime = 0;
 
     @Inject(at = @At("HEAD"), method = "Lnet/minecraft/client/Keyboard;onKey(JIIII)V", cancellable = true)
     private void tapeModifyOnKey(long window, int key, int scancode, int i, int j, CallbackInfo info) {
@@ -33,6 +34,19 @@ public abstract class KeyboardMixin {
             info.cancel();
 
         }
+
+        // handle disabling
+        if (key == KEY_ESCAPE && keyState && Manager.INSTANCE.isRunningIgnorePause()) {
+            if (MinecraftClient.getInstance().currentScreen == null) {
+                Manager.INSTANCE.disable();
+                info.cancel();
+            } else if (System.currentTimeMillis() - lastEscapePressTime <= 300) {
+                Manager.INSTANCE.disable();
+            }
+
+            lastEscapePressTime = System.currentTimeMillis();
+        }
+
 
     }
 
