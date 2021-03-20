@@ -3,6 +3,8 @@
 
 ![TapedMouse](https://user-images.githubusercontent.com/39813387/111853285-b5e2cb80-88f0-11eb-9a61-24cb8b80ecf4.png)
 
+Downloads and more information can be found on the [CurseForge Page](https://www.curseforge.com/minecraft/mc-mods/afktape)!
+
 ![DemoGif](https://i.giphy.com/media/iF0y5cldUJvm1mJi7z/giphy.webp)
 
 
