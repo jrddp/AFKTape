@@ -3,7 +3,8 @@
 
 ![TapedMouse](https://user-images.githubusercontent.com/39813387/111853285-b5e2cb80-88f0-11eb-9a61-24cb8b80ecf4.png)
 
-![DemoGif](https://media3.giphy.com/media/iF0y5cldUJvm1mJi7z/giphy.gif)
+![DemoGif](https://i.giphy.com/media/iF0y5cldUJvm1mJi7z/giphy.webp)
+
 
 This mod was made to simulate taping down buttons while AFK. This can be very useful when using any farm that require holding buttons down, 
 or making tedious tasks like walking/boating long distances simple.
