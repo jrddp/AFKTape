@@ -1,7 +1,7 @@
 package me.kokeria.afktape;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.options.KeyBinding;
+import net.minecraft.client.option.KeyBinding;
 import net.minecraft.util.Formatting;
 
 import java.util.HashSet;

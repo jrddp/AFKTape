@@ -21,14 +21,14 @@ public abstract class InGameHudMixin {
 
     @Shadow protected abstract void drawTextBackground(MatrixStack matrixStack, TextRenderer textRenderer, int i, int j, int k);
 
-    @Shadow public abstract TextRenderer getFontRenderer();
+    @Shadow public abstract TextRenderer getTextRenderer();
 
     //render HUD when running
     @Inject(at = @At("TAIL"), method = "Lnet/minecraft/client/gui/hud/InGameHud;render(Lnet/minecraft/client/util/math/MatrixStack;F)V")
     private void tapeModifyOnKey(MatrixStack stack, float f, CallbackInfo info) {
 
         if (Manager.INSTANCE.isRunning()) {
-            TextRenderer textRenderer = getFontRenderer();
+            TextRenderer textRenderer = getTextRenderer();
             String[] AFKTapeMsg = Manager.INSTANCE.getMessage();
 
             stack.push();
